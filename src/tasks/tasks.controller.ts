@@ -1,6 +1,7 @@
 import {Body, Controller, Get, Post} from '@nestjs/common';
 import {TasksService} from "./tasks.service";
 import {CreateTaskDto} from "./task-dto/create-task.dto";
+import {Task} from "./entities/task.entity";
 
 @Controller('tasks')
 export class TasksController {
@@ -8,9 +9,9 @@ export class TasksController {
 
     // CREATE NEW TASK
     @Post('create')
-    create(@Body() createTaskDto: CreateTaskDto) {
+    async create(@Body() createTaskDto: Partial<Task>) {
         try {
-            return this.taskService.create(createTaskDto);
+            return await this.taskService.create(createTaskDto);
         }catch (error) {
             throw new Error(error);
         }
